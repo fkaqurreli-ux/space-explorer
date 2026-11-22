@@ -38,6 +38,27 @@ h1{font-size:29px;line-height:1;margin:0 0 8px;letter-spacing:-1px}.subtitle{fon
 <div class="hint">DRAG TO ORBIT <span style="color:#82eaff">·</span> SCROLL TO ZOOM <span style="color:#82eaff">·</span> CLICK TO SELECT</div>
 <div class="bottom"><button class="tool" id="reset" title="Rivendos pamjen"><span class="ico">⌂</span><span class="wide">Reset</span></button><div class="divider"></div><button class="tool on" id="play" title="Ndal / vazhdo animacionin"><span class="ico">Ⅱ</span></button><button class="tool" id="labels" title="Shfaq / fshih etiketat"><span class="ico">◎</span><span class="wide">Labels</span></button><button class="tool" id="speed" title="Ndrysho shpejtësinë"><span class="ico">◷</span><span class="wide">1×</span></button><div class="divider"></div><button class="tool" id="panelbtn" title="Paneli i planetit"><span class="ico">☰</span></button><div class="divider"></div><div class="volume-wrap"><button class="tool on" id="audioToggle" title="Mute / unmute ambient sound"><span class="ico" id="audioIcon">♫</span></button><input id="volume" type="range" min="0" max="100" value="22" aria-label="Volumi i muzikës"></div></div>
 <div class="toast" id="toast"></div>
+<script>
+/* Fallback: never leave the visitor trapped on the loading screen if WebGL or a CDN module fails. */
+(function(){
+  const revealError = function(message){
+    const loading=document.getElementById('loading');
+    if(!loading || loading.classList.contains('done')) return;
+    const p=loading.querySelector('p');
+    if(p) p.textContent='NUK U NGARKUA — PROVO PËRSËRI';
+    const hint=loading.querySelector('span');
+    if(hint) hint.textContent='Kontrollo internetin dhe provo Chrome / Samsung Internet';
+    const bar=loading.querySelector('.loadbar');
+    if(bar) bar.style.display='none';
+    loading.style.cursor='pointer';
+    loading.title=message || 'Reload the page';
+    loading.addEventListener('click',()=>location.reload(),{once:true});
+  };
+  window.addEventListener('error',()=>revealError('WebGL ose moduli 3D nuk u ngarkua'));
+  window.addEventListener('unhandledrejection',()=>revealError('Gabim gjatë nisjes së skenës 3D'));
+  setTimeout(()=>revealError('Ngarkimi zgjati shumë'),15000);
+})();
+</script>
 <script type="module">
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
