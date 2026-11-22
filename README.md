@@ -1,32 +1,41 @@
-# SEC PX1 — Solar Explorer
+# SEC PX1 — Solar System Explorer
 
-Eksperiencë interaktive 3D e sistemit diellor, e ndërtuar me Three.js dhe JavaScript modules.
+Përvojë 3D interaktive e sistemit diellor, e frymëzuar nga NASA Eyes on the Solar System. Ndërfaqja përfshin navigim trupash qiellorë, kamerë orbitale, kontroll kohor 1949–2049, ngjarje historike të misioneve, krahasim diametrash dhe kontroll të ndriçimit.
 
 ## Nisja lokale
 
-Shërbeje folderin me një server statik (p.sh. VS Code Live Server) ose përdor Vite:
+Kërkohet një server lokal për ES modules:
 
 ```bash
 npm create vite@latest solar-odyssey -- --template vanilla
-# kopjo skedarët e këtij projekti te projekti Vite
+# Kopjo index.html, styles/ dhe js/ në projektin e ri
 npm install three
 npm run dev
 ```
 
-GitHub Pages përdor CDN për Three.js dhe teksturat; nuk kërkon build lokal.
+Në GitHub Pages Three.js dhe teksturat merren nga CDN; nuk kërkohet API key për versionin aktual.
 
 ## Arkitektura
 
-- `index.html`: markup semantik dhe importmap.
-- `styles/main.css`: UI responsive, tipografi dhe controls.
-- `js/main.js`: skena Three.js, drita, planetët, orbitat dhe loop-i.
-- `js/planets.js`: të dhënat shkencore dhe hartat e teksturave.
-- `js/audio.js`: soundscape procedural Web Audio me crossfade.
-- `js/camera.js`: fluturime kamere me easing.
-- `js/ui.js`: navigimi dhe telemetria.
+- `index.html` — strukturë UI, timeline, panel misioni dhe kontrolle.
+- `styles/main.css` — pamja responsive.
+- `js/main.js` — Three.js, dritat, yjet, asteroidët, koha, ngjarjet dhe ndërveprimi.
+- `js/planets.js` — të dhënat e planetëve dhe teksturat.
+- `js/camera.js` — animacionet e kamerës.
+- `js/audio.js` — soundscape procedural Web Audio.
 
-## Tekstura dhe audio
+## Koha dhe saktësia shkencore
 
-Teksturat ngarkohen nga Solar System Scope CDN. Mund t'i vendosësh lokalisht në `assets/textures/` dhe të ndryshosh `TEX` në `js/planets.js` në `../assets/textures/`. Për Tokën, normal/cloud/specular maps duhen shtuar vetëm pasi të verifikohet emri dhe formati i skedarit në burim. Soundscape gjenerohet proceduralisht; për audio personale, krijo një Audio element dhe përdor skedarë në `assets/audio/` pas ndërveprimit të përdoruesit.
+Timeline ndryshon datën e simulimit dhe lëviz planetët me një model Keplerian të thjeshtuar. Madhësitë, distancat dhe fazat e orbitave janë të shkallëzuara/afërsuara për eksplorim vizual. Ngjarjet Voyager, Cassini, Juno dhe Perseverance janë pika historike reference; shënuesit e misioneve janë skematikë dhe **nuk janë trajektore SPICE ose pozicione të llogaritura nga JPL Horizons**.
 
-Kontrollo licencën dhe kushtet e atribuimit të çdo teksture/audioje përpara ripërdorimit. Përmasa orbitale dhe shpejtësitë në këtë pamje janë të shkallëzuara për vizualizim, jo simulim astronomik në njësi absolute.
+Për një binjak dixhital të saktë duhet të shtohet një shërbim backend që kërkon JPL Horizons API dhe SPICE kernels, i cili kthen vektorë pozicioni në një kornizë koordinative të përcaktuar. Nuk duhet të përdoret ky version për navigim, planifikim misioni ose pretendime shkencore precize. UI e shënon qartë natyrën skematike të të dhënave të misioneve.
+
+## Teksturat dhe audio
+
+Teksturat ngarkohen nga Solar System Scope CDN dhe Three.js examples. Për t'i zëvendësuar, vendos skedarët në `assets/textures/` dhe ndrysho `TEX` në `js/planets.js` ose URL-të përkatëse në `js/main.js`. Kontrollo emrat, formatet, licencat dhe kërkesat e atribuimit para publikimit.
+
+Audioja gjenerohet proceduralisht me Web Audio API pas ndërveprimit të parë. Nëse shton muzikë tënden, vendose në `assets/audio/` dhe ngarko me `Audio`/Web Audio pas klikimit të përdoruesit. Respekto licencat e çdo materiali të jashtëm.
+
+## Shënime performance
+
+Përdoret pixel ratio i kufizuar, instancing për asteroidët dhe një numër i moderuar poligonesh. FPS real varet nga pajisja, browser-i dhe rrjeti; nuk garantohet 60 FPS në çdo pajisje.
