@@ -2,35 +2,25 @@
 <html lang="sq">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#030611"><meta name="description" content="SEC PX1 — një udhëtim interaktiv në sistemin diellor.">
-<title>SEC PX1 — Solar Odyssey</title>
+<meta name="theme-color" content="#02050b"><meta name="description" content="SEC PX1 — Solar System Explorer, interactive orbital laboratory.">
+<title>SEC PX1 — Solar System Explorer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Orbitron:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./styles/main.css">
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/"}}</script>
 </head>
 <body>
-<canvas id="space" aria-label="Skenë 3D interaktive e sistemit diellor"></canvas>
-<div class="loading" id="loading"><div class="loader"><div class="star">✦</div><p>INITIALIZING UNIVERSE</p><div class="bar"><i></i></div><small style="font:8px 'DM Mono';letter-spacing:2px;color:#60718f">SEC PX1 · SOLAR ODYSSEY</small></div></div>
-<header class="top"><div class="brand">SEC PX1<small>DEEP SPACE OBSERVATORY</small></div><div class="status">LIVE SIMULATION</div></header>
-<nav class="planet-nav" id="planet-nav" aria-label="Zgjidh planetin"></nav>
-<div class="coordinates" id="coordinates" style="position:fixed;z-index:3;top:58px;left:50%;transform:translateX(-50%);font:8px 'DM Mono';letter-spacing:2px;color:#778aaa;white-space:nowrap">SOL SYSTEM · MILKY WAY</div>
-<aside class="readout" id="telemetry">
-<div class="kicker" id="kind">PLANETARY TELEMETRY</div><h1 id="name">Toka</h1>
-<p class="desc" id="description">Eksploro botën tonë blu.</p>
-<div class="telemetry">
-<div class="metric"><span>DIAMETRI</span><b id="diameter">12,742 km</b></div>
-<div class="metric"><span>DISTANCA NGA DIELLI</span><b id="distance">149.6 mln km</b></div>
-<div class="metric"><span>HËNËT</span><b id="moons">1</b></div>
-<div class="metric"><span>VITI</span><b id="year">365.25 ditë</b></div>
-<div class="metric"><span>DITA</span><b id="day">23h 56m</b></div>
-<div class="metric"><span>TEMPERATURA MES.</span><b id="temp">15 °C</b></div>
-</div><div class="fact"><strong>FAKT KOZMIK</strong><span id="fact"></span></div>
-</aside>
-<div class="tooltip" id="tooltip"></div>
-<div class="hint">DRAG · ORBIT &nbsp; / &nbsp; SCROLL · ZOOM &nbsp; / &nbsp; TAP · EXPLORE</div>
-<div class="controls">
-<button id="reset">RESET VIEW</button><button id="pause">PAUSE</button><button id="labels" class="active">LABELS</button><button id="mute" class="active">SOUND</button><input id="volume" type="range" min="0" max="100" value="22" aria-label="Volumi ambiental">
-</div>
+<canvas id="space"></canvas>
+<div class="loading" id="loading"><div class="loader"><div class="loader-mark">◎</div><p>LOADING SOLAR SYSTEM</p><div class="bar"><i></i></div><small>SEC PX1 · ORBITAL LABORATORY</small></div></div>
+<header class="top"><a class="brand" href="./">SEC PX1 <small>SOLAR SYSTEM EXPLORER</small></a><div class="top-right"><span class="live-dot"></span><span id="sim-state">SIMULATION READY</span><span class="divider"></span><span id="utc-clock">UTC --:--:--</span></div></header>
+<div class="left-rail"><div class="rail-label">CELESTIAL BODIES</div><nav id="planet-nav"></nav><div class="rail-label mission-label">MISSIONS</div><nav id="mission-nav"></nav></div>
+<div class="target-tag"><span class="target-dot"></span><span id="target-name">SOLAR SYSTEM</span><span class="target-sep">/</span><span id="target-range">OVERVIEW</span></div>
+<aside class="readout" id="telemetry"><div class="kicker" id="kind">SOLAR SYSTEM / TARGET DATA</div><h1 id="name">Solar System</h1><p class="desc" id="description">Explore the planets, spacecraft and orbital paths.</p><div class="telemetry">
+<div class="metric"><span>DIAMETER</span><b id="diameter">—</b></div><div class="metric"><span>MEAN DISTANCE</span><b id="distance">—</b></div><div class="metric"><span>KNOWN MOONS</span><b id="moons">—</b></div><div class="metric"><span>ORBITAL PERIOD</span><b id="year">—</b></div><div class="metric"><span>ROTATION</span><b id="day">—</b></div><div class="metric"><span>MEAN TEMP.</span><b id="temp">—</b></div></div><div class="fact"><strong>SCIENCE NOTE</strong><span id="fact">Select a world to inspect its data.</span></div></aside>
+<div class="right-tools"><button id="reset" title="Reset view">⌖ <span>RESET VIEW</span></button><button id="labels" class="active" title="Toggle labels">Aa <span>LABELS</span></button><button id="compare" title="Compare sizes">◉ <span>COMPARE</span></button><button id="light" title="Solar illumination">☼ <span>LIGHT</span></button><button id="sound" title="Ambient sound">♫ <span>SOUND</span></button></div>
+<section class="timeline" aria-label="Time controls"><div class="timeline-head"><div><span class="section-label">MISSION CONTROL</span><strong id="date-display">2026-11-22 00:00:00 UTC</strong></div><div class="time-actions"><button id="step-back" title="Step backward">−</button><button id="play-time" class="play" title="Play time">Ⅱ</button><button id="step-forward" title="Step forward">+</button><select id="time-rate" aria-label="Time speed"><option value="1">1×</option><option value="60">1 min/s</option><option value="3600" selected>1 hr/s</option><option value="86400">1 day/s</option><option value="2592000">30 days/s</option><option value="31536000">1 year/s</option></select></div></div><div class="range-wrap"><span>1949</span><input id="time-range" type="range" min="0" max="100" step=".01" value="77.8"><span>2049</span></div><div class="events"><button data-date="1969-07-20T20:17:00Z">APOLLO 11 · 1969</button><button data-date="1979-03-05T12:00:00Z">VOYAGER 1 · JUPITER · 1979</button><button data-date="1989-08-25T03:56:00Z">VOYAGER 2 · NEPTUNE · 1989</button><button data-date="2016-07-04T03:53:00Z">JUNO · JUPITER · 2016</button></div></section>
+<div class="compare-modal" id="compare-modal"><div class="compare-head"><span>RELATIVE DIAMETERS</span><button id="compare-close">×</button></div><div id="compare-bars"></div><small>Planet diameters are shown to a common linear scale.</small></div>
+<div class="light-control" id="light-control"><label for="light-range">SOLAR LIGHT ANGLE</label><input id="light-range" type="range" min="0" max="100" value="50"></div>
+<div class="tooltip" id="tooltip"></div><div class="hint">DRAG · ORBIT &nbsp; SCROLL · ZOOM &nbsp; CLICK · INSPECT</div>
 <script type="module" src="./js/main.js"></script>
 </body></html>
