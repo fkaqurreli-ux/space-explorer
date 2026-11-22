@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="sq">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Space Explorer</title>
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;font-family:system-ui,Arial,sans-serif;background:radial-gradient(circle at 50% 0,#182b59,#080d20 55%,#030611);color:#f5f7ff;min-height:100vh}header{text-align:center;padding:70px 20px 45px}header p{color:#b9c8f5;max-width:650px;margin:14px auto;line-height:1.7}h1{font-size:clamp(2.5rem,8vw,5rem);margin:0;background:linear-gradient(90deg,#8deaff,#c5a8ff);background-clip:text;color:transparent}.tag{letter-spacing:.2em;text-transform:uppercase;color:#91a9ef;font-size:.8rem}.wrap{max-width:1100px;margin:auto;padding:20px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}.planet{border:1px solid #ffffff22;background:#ffffff0c;border-radius:18px;padding:22px;text-align:center;cursor:pointer;transition:.2s}.planet:hover{transform:translateY(-5px);background:#ffffff18}.orb{font-size:3.3rem;filter:drop-shadow(0 0 15px #7a9cff)}h2{margin:10px 0 5px}.planet p,.mission p{color:#c1cbed;line-height:1.6}.mission{margin:45px 0;padding:28px;border-radius:20px;background:linear-gradient(120deg,#15234b,#251b49);border:1px solid #ffffff22}button{border:0;border-radius:999px;padding:12px 20px;background:#a9c7ff;color:#101a35;font-weight:700;cursor:pointer}footer{text-align:center;padding:30px;color:#8290b8;font-size:.9rem}dialog{max-width:440px;border:1px solid #ffffff33;border-radius:18px;background:#111b38;color:white;padding:25px}dialog::backdrop{background:#000b}dialog p{line-height:1.7;color:#c9d4f4}
+</style>
+</head>
+<body>
+<header><div class="tag">Eksploro universin</div><h1>SPACE EXPLORER</h1><p>Një udhëtim i shkurtër nëpër planetët e sistemit tonë diellor. Zgjidh një planet dhe zbulo diçka interesante!</p></header>
+<main class="wrap"><section class="grid" id="planets"></section><section class="mission"><div class="tag">Misionet e ardhshme</div><h2>Drejt Hënës dhe Marsit 🚀</h2><p>Eksplorimi hapësinor na ndihmon të kuptojmë më mirë vendin tonë në univers. Shkenca, kurioziteti dhe guximi na çojnë gjithnjë më larg.</p><button onclick="document.getElementById('info').showModal()">Mëso më shumë</button></section></main>
+<footer>© 2026 Space Explorer · Krijuar për kuriozët e universit ✨</footer>
+<dialog id="info"><h2>Vazhdo eksplorimin!</h2><p>Hëna është bota më e afërt me Tokën, ndërsa Marsi është një nga objektivat kryesore të eksplorimit njerëzor në të ardhmen.</p><button onclick="document.getElementById('info').close()">Mbyll</button></dialog>
+<script>
+const data=[['☀️','Dielli','Ylli në qendër të sistemit tonë diellor.'],['☿️','Merkuri','Planeti më i vogël dhe më afër Diellit.'],['♀️','Venusi','Planeti më i nxehtë në sistemin diellor.'],['🌍','Toka','Shtëpia jonë dhe i vetmi vend i njohur me jetë.'],['🔴','Marsi','Planeti i kuq, me male dhe lugina gjigante.'],['🟠','Jupiteri','Planeti më i madh në sistemin diellor.'],['🪐','Saturni','I famshëm për unazat e tij madhështore.'],['🔵','Urani','Gjigant i akullt që rrotullohet pothuajse anash.'],['🌊','Neptuni','Një botë e largët me erëra shumë të fuqishme.']];
+const root=document.getElementById('planets');data.forEach(([icon,name,desc])=>{const el=document.createElement('article');el.className='planet';el.innerHTML=`<div class="orb">${icon}</div><h2>${name}</h2><p>${desc}</p>`;el.onclick=()=>{const d=document.getElementById('info');d.querySelector('h2').textContent=name;d.querySelector('p').textContent=desc;d.showModal()};root.appendChild(el)});
+</script></body></html>
